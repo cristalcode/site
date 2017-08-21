@@ -1,27 +1,7 @@
 //- Test
 
-body
-    background-color red
-    display flex
-    justify-content space-around
+@import "./vendor/normalize"
+@import "./base/variables-fonts"
+@import "./base/config"
 
-@media screen and (min-width 500px)
-    body
-        background-color blue
-
-
-h1
-    color white
-
-@media screen and (min-width 600px)
-    h1
-        color black
-
-@media screen and (min-width 500px)
-    span
-        color yellow
-
-
-img
-    width 500px
-    height 300px
+@import "./app/header/*"

@@ -1,0 +1,68 @@
+.header
+    box-sizing border-box
+    padding 0.8em 0.7em
+    box-sizing border-box
+    display flex
+    justify-content space-between
+    align-items center
+
+.header__logo
+    display flex
+    align-items center
+
+    .header__image
+        width 45px
+        height 45px
+        margin-right 0.5em
+
+    .header__title
+        .header__text
+            margin 0
+            font-size 1.7rem
+            font-weight 300
+
+.header__menu
+    width 30px
+    height 22px
+    position relative
+    transition .5s ease-in-out
+    cursor pointer
+
+    .header__bar
+        display block
+        position absolute
+        height 2px
+        width 100%
+        background #333132
+        border-radius 25px
+        opacity 1
+        left 0
+        transition .25s ease-in-out
+
+        &:nth-child(1)
+            top 0
+
+        &:nth-child(2)
+        &:nth-child(3)
+            top 10px
+
+        &:nth-child(4)
+            top 20px
+
+.header__menu.open
+    .header__bar
+        &:nth-child(1)
+            top 10px
+            width 0%
+            left 50%
+
+        &:nth-child(2)
+            transform rotate(45deg)
+
+        &:nth-child(3)
+            transform rotate(-45deg)
+
+        &:nth-child(4)
+            top 10px
+            width 0%
+            left 50%
