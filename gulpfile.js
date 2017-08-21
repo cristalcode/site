@@ -5,10 +5,12 @@ const gulp = require("gulp"),
       autoprefixer = require("gulp-autoprefixer"),
       babel = require("gulp-babel"),
       concat = require("gulp-concat"),
-      plumber = require("gulp-plumber"),
+      imagemin = require('gulp-imagemin'),
+      rename = require("gulp-rename"),
       gutil = require("gulp-util"),
+      plumber = require("gulp-plumber"),
       runSequence = require("run-sequence"),
-      rename = require("gulp-rename");
+      browserSync = require('browser-sync').create();
 
 var onError = (err) => {
     gutil.log(gutil.colors.yellow("❌  Error in dependency ❌"));
@@ -76,12 +78,23 @@ gulp.task("build-scripts", () => {
     runSequence("convert-es6", "concat");
 });
 
-gulp.task("watch", () => {
-    gulp.watch("./*.pug", ["templates"]);
-    gulp.watch("./assets/styles/**/*.styl", ["build-styles"]);
-    gulp.watch("./assets/js/**/*.js", ["build-scripts"]);
+gulp.task('compress-images', () =>
+    gulp.src('./assets/images/**/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('./dist/images/'))
+);
+
+gulp.task('server', () => {
+
+    browserSync.init({
+        server: "./dist/"
+    });
+
+    gulp.watch(["./*.pug", "./assets/modules/**/*.pug"], ["templates"]).on("change", browserSync.reload);
+    gulp.watch("./assets/styles/**/*.styl", ["build-styles"]).on("change", browserSync.reload);
+    gulp.watch("./assets/js/**/*.js", ["build-scripts"]).on("change", browserSync.reload);
 });
 
 gulp.task('default', () => {
-    runSequence(["templates", "build-styles", "build-scripts"], "watch");
+    runSequence(["templates", "build-styles", "build-scripts"], "server");
 });
